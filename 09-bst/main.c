@@ -11,63 +11,41 @@
 #include "declaracoes.h"
 
 /* TODO: 
-
-    - Criar a estrutura da arvore (funcoes.c declaracoes.h);
     - Funcao inserir;
     -   "    buscar;
     -   funcoes -> pos- pre- em-ordem e largura;
-
-
 */
+
 int main()
 {
-    head = NULL; 
+    raiz = NULL;
 
     while (scanf(" %s", comando))
     {
         if (strcmp(comando, "terminar") == 0)   //Terminar
         { 
-            // FREE(head);
+            // FREE(raiz);
             return 0;
         }
         
         if (strcmp(comando, "inserir") == 0)    // Inserir
         { 
-
             scanf(" %d", &valor);
-            // inserir(valor);
-            printf("INSERIR: %d\n", valor);
+            inserir(&raiz, valor);
         }
 
         if (strcmp(comando, "buscar") == 0)     // Buscar
         { 
             scanf(" %d", &valor);
-            // buscar(valor);
-            printf("BUSCAR: %d\n", valor);
+            buscar(&raiz, valor);
         }
 
-        if (strcmp(comando, "pos-ordem") == 0)  // Pos-ordem
-        { 
-            // PosOrdem();
-            printf("ENTROU EM POS-ORDEM\n");
-        }
+        if (strcmp(comando, "pos-ordem") == 0) PosOrdem(&raiz); // Pos-ordem
         
-        if (strcmp(comando, "pre-ordem") == 0) // Pre-ordem
-        {
-            // PreOrdem();
-            printf("ENTROU EM PRE-ORDEM\n");
-        }
+        if (strcmp(comando, "pre-ordem") == 0) PreOrdem(&raiz); // Pre-ordem
         
-        if (strcmp(comando, "em-ordem") == 0) // Em-ordem
-        {
-            // EmOrdem();
-            printf("ENTROU EM EM-ORDEM\n");
-        }
-
-        if (strcmp(comando, "largura") == 0) // Largura
-        {
-            // Largura();
-            printf("ENTROU EM LARGURA\n");
-        }
+        if (strcmp(comando, "em-ordem") == 0)  EmOrdem(&raiz); // Em-ordem
+        
+        if (strcmp(comando, "largura") == 0)   Largura(&raiz); // Largura
     }
 }

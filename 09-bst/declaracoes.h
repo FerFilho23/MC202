@@ -1,15 +1,18 @@
 char comando[1];
 int valor;
 
-typedef struct node {
+typedef struct folha {
     double data;
-    struct node *A;
-    struct node *B; 
-} node;
+    struct folha *filho_E; //Esquerda
+    struct folha *filho_D; //Direita
+} folha;
 
-node* head;
+folha* raiz;
 
-void FREE(node* head);
-void inserir(node** head, double valor, int posicao);
-void print(node** head);
-void reverter(node** head, int inicio, int termino);
+void FREE(folha* raiz);                          //TERMINAR  
+void inserir(folha **raiz, int valor);           // INSERIR
+void buscar(folha **raiz, int valor);                       //BUSCAR
+void PosOrdem(folha **raiz);        //POS-ORDEM
+void EmOrdem(folha **raiz);      //EM-ORDEM
+void PreOrdem(folha **raiz);   //PRE-ORDEM
+void largura(folha **raiz);      //LARGURA

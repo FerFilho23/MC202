@@ -17,28 +17,34 @@ void inserir(folha **raiz, int chave)
     new->D = NULL;
     new->E = NULL;
 
-    if (!*raiz)
+    folha *filho = *raiz;
+    folha *pai = NULL;
+
+    while (filho != NULL)
+    {
+        pai = filho;
+        if (new->key > filho->key)
+        {
+            filho = filho->D;
+        }
+        else if (new->key < filho->key)
+        {
+            filho = filho->E;
+        }
+    }
+
+    if (!pai)
     {
         *raiz = new;
-        printf("inserir raiz\n");
         return;
     }
-
-    folha *atual = *raiz;
-    while (atual)
+    else if (new->key < pai->key)
     {
-        if (new->key > atual->key)
-        {
-            atual = atual->E;
-        }
-        else
-        {
-            atual = atual->D;
-        }
+        pai->E = new;
+    } else{
+        pai->D = new;
     }
-
-    atual = new;
-    printf("inserir folha\n");
+    
     return;
 }
 
@@ -56,31 +62,49 @@ void buscar(folha *raiz, int chave)
         printf("%d pertence\n", chave);
         return;
     }
-    if (chave > raiz->key){
-        printf("Entrou na E\n");
-        buscar(raiz->E, chave); //Recursão
-    }else{
-        printf("Entrou na D\n");
-        buscar(raiz->D, chave);
-    }   
+    if (chave > raiz->key) buscar(raiz->D, chave); //Recursão
+    else buscar(raiz->E, chave);
+       
 }
 
-void PosOrdem(folha **raiz)
+void PosOrdem(folha *raiz)
 {
-    printf("ENTROU EM POS-ORDEM\n");
+    if (!raiz) return;
+
+    PosOrdem(raiz->E);
+
+    PosOrdem(raiz->D);
+
+    printf("%d ", raiz->key);
 } //POS-ORDEM
 
-void EmOrdem(folha **raiz)
+void EmOrdem(folha *raiz)
 {
-    printf("ENTROU EM EM-ORDEM\n");
+    if (!raiz){ return;}
+
+    EmOrdem(raiz->E);
+    printf("%d ", raiz->key);
+    EmOrdem(raiz->D);
+
 } //EM-ORDEM
 
-void PreOrdem(folha **raiz)
+void PreOrdem(folha *raiz)
 {
-    printf("ENTROU EM PRE-ORDEM\n");
+    if (!raiz) return; 
+    printf("%d ", raiz->key);
+    PreOrdem(raiz->E); 
+    PreOrdem(raiz->D); 
 } //PRE-ORDEM
 
-void Largura(folha **raiz)
+void Largura(folha *raiz, queue** lista)
 {
     printf("ENTROU EM LARGURA\n");
+    
+    Enqueue(raiz, lista);
+    
+    while (lista){
+
+
+    }
+
 } //LARGURA

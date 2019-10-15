@@ -11,13 +11,12 @@
 
 /* TODO: 
 
-        - corrigir o bug da funcao inserir/buscar: nao insere folhas;
-        - implementar funcoes de: pos- pre- em- ordem e largura;
+        - implementar funcoes de: pre-ordem e largura;
 
 */
 int main()
 {
-    raiz = NULL; 
+    raiz = NULL;
 
     while (scanf(" %s", comando))
     {
@@ -44,12 +43,22 @@ int main()
             buscar(raiz, chave);
         }
 
-        if (strcmp(comando, "pos-ordem") == 0) PosOrdem(&raiz); // Pos-ordem
+        if (strcmp(comando, "pos-ordem") == 0){
+            PosOrdem(raiz); // Pos-ordem
+            printf("\n");
+        }
+        if (strcmp(comando, "pre-ordem") == 0){
+            PreOrdem(raiz); // Pre-ordem
+            printf("\n");
+        }
+        if (strcmp(comando, "em-ordem") == 0){  
+            EmOrdem(raiz); // Em-ordem
+            printf("\n");
+        }
 
-        if (strcmp(comando, "pre-ordem") == 0) PreOrdem(&raiz); // Pre-ordem
-
-        if (strcmp(comando, "em-ordem") == 0)  EmOrdem(&raiz); // Em-ordem
-
-        if (strcmp(comando, "largura") == 0)   Largura(&raiz); // Largura
+        if (strcmp(comando, "largura") == 0) {
+            Largura(raiz); // Largura
+            printf("\n");
+        }
     }
 }

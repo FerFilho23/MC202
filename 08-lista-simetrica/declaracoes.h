@@ -1,4 +1,4 @@
-char comando[1];
+char comando[15];
 int inicio, termino, posicao;
 double valor;
 

@@ -14,68 +14,59 @@ void FREE(folha *raiz){
 
 void inserir(folha **raiz, int chave)
 {
-    // printf("INSERIR: %d\n", chave);
 
-    folha *new = malloc(sizeof(folha));
+    folha *new = malloc(sizeof(folha)); //Alocar memória 
     if (!new)   return;
 
-    new->key = chave;
+    new->key = chave;   
     new->D = NULL;
     new->E = NULL;
+    new->pai = NULL;
+    folha *atual = *raiz;
+    folha *prev = NULL;
 
-    folha *filho = *raiz;
-    folha *pai = NULL;
-
-    while (filho != NULL)
+    while (atual != NULL)  
     {
-        pai = filho;
-        if (new->key == filho->key)
+        prev = atual;
+        if (new->key == atual->key) //IGNORAR chaves iguais 
         {
             return;
         }
         
-        if (new->key > filho->key)
+        if (new->key > atual->key)  //Percorrer a arvore avaliando se a chave new é menor ou maior que os nos ja existentes
         {
-            filho = filho->D;
+           atual = atual->D;
         }
         else 
         {
-            filho = filho->E;
+            atual = atual->E;
         }
     }
 
-    if (!pai)
+    if (!prev)   //Arvore Vazia
     {
         *raiz = new;
+    
         return;
     }
-    else if (new->key < pai->key)
+    else if (new->key < prev->key)
     {
-        pai->E = new;
+        prev->E = new;
+        prev->E->pai = prev;
     } else{
-        pai->D = new;
+        prev->D = new;
+        prev->D->pai = prev;
     }
     
     return;
 }
 
-void buscar(folha *raiz, int chave)
+folha* busca(folha *raiz, int chave)
 {
-    // printf("BUSCAR: %d\n", chave);
-    if (raiz == NULL)
-    {
-        printf("%d nao pertence\n", chave);
-        return;
-    }
-
-    if (raiz->key == chave)
-    {
-        printf("%d pertence\n", chave);
-        return;
-    }
-    if (chave > raiz->key) buscar(raiz->D, chave); //Recursão
-    else buscar(raiz->E, chave);
-       
+    if (raiz == NULL ||raiz->key == chave)  return raiz;
+    
+    if (chave > raiz->key) return busca(raiz->D, chave); //Recursão
+    else return busca(raiz->E, chave);
 }
 
 void PosOrdem(folha *raiz)
@@ -136,5 +127,57 @@ void Largura(folha *raiz, folha *atual, folha *aux){
 
 } //LARGURA
 
-void MAX(folha *raiz);
-void MIN(folha *raiz);
+
+
+////// lab 10;
+
+folha* MAX(folha *raiz){
+    
+    while (raiz->D != NULL) {
+        raiz = raiz->D; 
+    } 
+  
+    return raiz; 
+
+}   //MAXIMO
+
+folha* MIN(folha *raiz){
+   
+    while (raiz->E != NULL) { 
+        raiz = raiz->E; 
+    } 
+  
+    return raiz; 
+    
+}   //MINIMO
+
+folha* sucessor(folha *raiz, folha *atual){
+
+    // Caso atual->D exista, procurar o menor valor da subarvore D
+    if (atual->D != NULL) return MIN(atual->D);
+
+    // Se nao ha subarvore D, procurar o pai cujo filho = pai->D
+    folha *p = atual->pai;
+    while (p != NULL && atual == p->D)
+    {
+        atual = p;
+        p = p->pai;
+    }
+    return p;
+}    //SUCESSOR
+
+folha* predecessor(folha *raiz, folha *atual){
+
+    // Caso atual->E exista, procurar o maior valor da subarvore E
+    if (atual->E != NULL)   return MAX(atual->E);
+
+    // Se nao ha subarvore E, procurar o pai cujo filho = pai->E
+    folha *p = atual->pai;
+    while (p != NULL && atual == p->E)
+    {
+        atual = p;
+        p = p->pai;
+    }
+    return p;
+
+}   // PREDECESSOR

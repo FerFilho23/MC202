@@ -11,8 +11,6 @@
 
 
 /* TODO:
-    -   MAX & MIN;
-    -   SUCESSOR & PREDECESSOR;
     -   REMOVER;
     -   INTERVALO X & Y;
 */
@@ -20,14 +18,13 @@
 int main()
 {
     raiz = NULL;
-    atual = NULL;
     aux = NULL;
     while (scanf(" %s", comando))
     {
         
         if (strcmp(comando, "terminar") == 0)
         { // Quit
-            // FREE(head);
+            FREE(raiz);
             return 0;
         }
         
@@ -42,8 +39,19 @@ int main()
         if (strcmp(comando, "buscar") == 0)  
         { // Buscar
             scanf(" %d", &chave);
-            buscar(raiz, chave);
+        
+            if (busca(raiz, chave))
+            {
+                printf("%d pertence\n", chave);
+
+            }else
+            {
+                printf("%d nao pertence\n", chave);
+            }
+            
+             
         }
+
 
         if (strcmp(comando, "pos-ordem") == 0){
             if (!raiz)
@@ -54,7 +62,7 @@ int main()
                 PosOrdem(raiz); // Pos-ordem
                 printf("\n");
             }
-        }
+        }   // POS-ORDEM
         if (strcmp(comando, "pre-ordem") == 0){
             if (!raiz)
             {
@@ -63,7 +71,7 @@ int main()
                 PreOrdem(raiz); // Pre-ordem
                 printf("\n");
             }
-        }
+        }   //  PRE-ORDEM
         if (strcmp(comando, "em-ordem") == 0){
             if (!raiz)
             {
@@ -72,8 +80,7 @@ int main()
                 EmOrdem(raiz); // Em-ordem
                 printf("\n");
             }
-        }
-
+        }   // EM-ORDEM
         if (strcmp(comando, "largura") == 0) {
             if (!raiz)
             {
@@ -82,32 +89,75 @@ int main()
                 Largura(raiz, atual, aux); // Largura
                 printf("\n");
             }
-        }
+        }   // LARGURA
 
-        if (strcmp(comando, "maximo") == 0)
-        {
+
+
+
+        if (strcmp(comando, "maximo") == 0){
+            aux = MAX(raiz);
             if (!raiz)
             {
                 printf("vazia\n");
             }
             else
             {
-                MAX(raiz); // Largura
-                printf("\n");
+               printf("%d\n", aux->key);
             }
-        }
-       
-        if (strcmp(comando, "minimo") == 0)
-        {
+        }   //MAXIMO
+        if (strcmp(comando, "minimo") == 0){
+            aux = MIN(raiz);
             if (!raiz)
             {
                 printf("vazia\n");
             }
             else
             {
-                MIN(raiz); // Largura
-                printf("\n");
+               printf("%d\n", aux->key);
             }
-        }
+        }   //MINIMO
+        if (strcmp(comando, "sucessor") == 0){
+            scanf(" %d", &chave);
+            aux = busca(raiz, chave);
+            
+            if (!aux)
+            {
+                printf("nao ha\n");
+            }
+            else
+            {
+                aux2 = sucessor(raiz,aux);
+                if (aux2)
+                {
+                    printf("%d\n", aux2->key); 
+                }else
+                {
+                    printf("nao ha\n");
+                }
+            }
+
+        } //SUCESSOR
+
+        if (strcmp(comando, "predecessor") == 0){
+            scanf(" %d", &chave);
+            aux = busca(raiz, chave);
+
+            if (!aux)
+            {
+                printf("nao ha\n");
+            }
+            else
+            {
+                aux2 = predecessor(raiz, aux);
+                if (aux2)
+                {
+                    printf("%d\n", aux2->key);
+                }
+                else
+                {
+                    printf("nao ha\n");
+                }
+            }    
+        } //PREDECESSOR
     }
 }

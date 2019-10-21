@@ -2,9 +2,15 @@
 #include <stdlib.h>
 #include "declaracoes.h"
 
-// void FREE(folha *raiz){
+void FREE(folha *raiz){
+    if (!raiz) return;
 
-// }
+    FREE(raiz->E);
+    FREE(raiz->D);
+
+    free(raiz);
+
+}
 
 void inserir(folha **raiz, int chave)
 {
@@ -23,11 +29,16 @@ void inserir(folha **raiz, int chave)
     while (filho != NULL)
     {
         pai = filho;
+        if (new->key == filho->key)
+        {
+            return;
+        }
+        
         if (new->key > filho->key)
         {
             filho = filho->D;
         }
-        else if (new->key < filho->key)
+        else 
         {
             filho = filho->E;
         }
@@ -80,7 +91,7 @@ void PosOrdem(folha *raiz)
 
 void EmOrdem(folha *raiz)
 {
-    if (!raiz){ return;}
+    if (!raiz) return;
 
     EmOrdem(raiz->E);
     printf("%d ", raiz->key);
@@ -96,15 +107,34 @@ void PreOrdem(folha *raiz)
     PreOrdem(raiz->D); 
 } //PRE-ORDEM
 
-void Largura(folha *raiz, queue** lista)
-{
-    printf("ENTROU EM LARGURA\n");
-    
-    Enqueue(raiz, lista);
-    
-    while (lista){
+void Largura(folha *raiz, folha *atual, folha *aux){
+    if (!atual)
+    {
+        aux = raiz;
+        aux->next = NULL;
+        atual = aux;
+    }
 
+    while (atual){                  //DEQUEUE
+        
+        folha* p = atual;
+        printf("%d ", p->key);
+        
+        if(p->E) {
 
+            aux->next = p->E; //ENQUEUE
+            aux = aux->next;            
+        }
+
+        if(p->D)  {
+
+            aux->next = p->D; //ENQUEUE
+            aux = aux->next;
+        }
+       atual = atual->next;
     }
 
 } //LARGURA
+
+void MAX(folha *raiz);
+void MIN(folha *raiz);

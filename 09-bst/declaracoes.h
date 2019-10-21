@@ -1,20 +1,14 @@
 char comando[15];
 int chave;
 
-typedef struct node {
+typedef struct folha {
     int key;
-    struct node *D;
-    struct node *E; 
+    struct folha *D;
+    struct folha *E;
+    struct folha *next;
 } folha;
 
-typedef struct fila{
-
-    struct fila *next;    
-}
-
-
-
-folha* raiz;
+folha* atual, *raiz, *aux; //USAR NA FILA; 
 
 void FREE(folha* raiz);
 void inserir(folha** raiz, int chave);
@@ -22,6 +16,8 @@ void buscar(folha* raiz, int chave);
 void PosOrdem(folha* raiz);        //POS-ORDEM
 void EmOrdem(folha* raiz);      //EM-ORDEM
 void PreOrdem(folha* raiz);   //PRE-ORDEM
-void Largura(folha* raiz, queue** lista);      //LARGURA
-folha ENQUEUE(folha* raiz, queue** lista);
-folha DEQUEUE(folha* raiz, queue**  lista );
+void Largura(folha* raiz, folha* atual, folha* aux);      //LARGURA
+void MAX(folha* raiz);
+void MIN(folha* raiz);
+void SUCESSOR(folha* raiz);
+void PREDECESSOR(folha* raiz);

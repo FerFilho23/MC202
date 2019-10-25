@@ -9,12 +9,6 @@
 #include <string.h>
 #include "declaracoes.h"
 
-
-/* TODO:
-    -   REMOVER;
-    -   INTERVALO X & Y;
-*/
-
 int main()
 {
     raiz = NULL;
@@ -22,22 +16,22 @@ int main()
     while (scanf(" %s", comando))
     {
         
-        if (strcmp(comando, "terminar") == 0)
-        { // Quit
+        if (strcmp(comando, "terminar") == 0){ 
             FREE(raiz);
             return 0;
-        }
-        
-        if (strcmp(comando, "inserir") == 0)
-        { // Inserir
+        }// TERMINAR / FREE
+       
+
+        if (strcmp(comando, "inserir") == 0){ 
 
             scanf(" %d", &chave);
             inserir(&raiz, chave);
 
-        }
+        }// Inserir
 
-        if (strcmp(comando, "buscar") == 0)  
-        { // Buscar
+
+        if (strcmp(comando, "buscar") == 0){  
+       
             scanf(" %d", &chave);
         
             if (busca(raiz, chave))
@@ -48,10 +42,9 @@ int main()
             {
                 printf("%d nao pertence\n", chave);
             }
-            
              
-        }
-
+        }// Buscar
+        
 
         if (strcmp(comando, "pos-ordem") == 0){
             if (!raiz)
@@ -76,6 +69,7 @@ int main()
             if (!raiz)
             {
                 printf("vazia\n");
+
             }else{
                 EmOrdem(raiz); // Em-ordem
                 printf("\n");
@@ -92,30 +86,34 @@ int main()
         }   // LARGURA
 
 
-
+        //LAB 10
 
         if (strcmp(comando, "maximo") == 0){
-            aux = MAX(raiz);
+           
             if (!raiz)
             {
                 printf("vazia\n");
             }
             else
             {
-               printf("%d\n", aux->key);
+                aux = MAX(raiz);
+                printf("%d\n", aux->key);
             }
         }   //MAXIMO
         if (strcmp(comando, "minimo") == 0){
-            aux = MIN(raiz);
+            
             if (!raiz)
             {
                 printf("vazia\n");
             }
             else
             {
-               printf("%d\n", aux->key);
+                aux = MIN(raiz);
+                printf("%d\n", aux->key);
             }
         }   //MINIMO
+
+
         if (strcmp(comando, "sucessor") == 0){
             scanf(" %d", &chave);
             aux = busca(raiz, chave);
@@ -126,7 +124,7 @@ int main()
             }
             else
             {
-                aux2 = sucessor(raiz,aux);
+                aux2 = sucessor(aux);
                 if (aux2)
                 {
                     printf("%d\n", aux2->key); 
@@ -137,7 +135,6 @@ int main()
             }
 
         } //SUCESSOR
-
         if (strcmp(comando, "predecessor") == 0){
             scanf(" %d", &chave);
             aux = busca(raiz, chave);
@@ -148,7 +145,7 @@ int main()
             }
             else
             {
-                aux2 = predecessor(raiz, aux);
+                aux2 = predecessor(aux);
                 if (aux2)
                 {
                     printf("%d\n", aux2->key);
@@ -159,5 +156,29 @@ int main()
                 }
             }    
         } //PREDECESSOR
-    }
+
+
+        if (strcmp(comando, "remover") == 0){
+            scanf(" %d", &chave);
+
+            if (busca(raiz, chave))
+            {
+                raiz = remover(raiz, chave);
+            }
+        } //REMOVER
+
+
+        if (strcmp(comando, "buscar-intervalo") == 0){
+            
+            scanf(" %d %d", &x1, &x2);
+
+            if (!intervalo(raiz, x1, x2, i))
+            {
+                printf("nenhuma\n");
+            }else
+            {
+                printf("\n");
+            }
+        } //INTERVALO
+    }    
 }

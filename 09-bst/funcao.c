@@ -12,8 +12,8 @@ void FREE(folha *raiz){
 
 }
 
-void inserir(folha **raiz, int chave)
-{
+
+void inserir(folha **raiz, int chave){
 
     folha *new = malloc(sizeof(folha)); //Alocar memória 
     if (!new)   return;
@@ -59,45 +59,41 @@ void inserir(folha **raiz, int chave)
     }
     
     return;
-}
+} //INSERIR
 
-folha* busca(folha *raiz, int chave)
-{
+
+folha* busca(folha *raiz, int chave){
     if (raiz == NULL ||raiz->key == chave)  return raiz;
     
     if (chave > raiz->key) return busca(raiz->D, chave); //Recursão
     else return busca(raiz->E, chave);
-}
+} //BUSCAR
 
-void PosOrdem(folha *raiz)
-{
-    if (!raiz) return;
+
+void PosOrdem(folha *raiz){
+    if (!raiz)  return;
 
     PosOrdem(raiz->E);
-
     PosOrdem(raiz->D);
-
     printf("%d ", raiz->key);
-} //POS-ORDEM
 
-void EmOrdem(folha *raiz)
-{
-    if (!raiz) return;
+} //POS-ORDEM
+void EmOrdem(folha *raiz){
+    if (!raiz)  return;
 
     EmOrdem(raiz->E);
     printf("%d ", raiz->key);
     EmOrdem(raiz->D);
 
 } //EM-ORDEM
-
-void PreOrdem(folha *raiz)
-{
-    if (!raiz) return; 
+void PreOrdem(folha *raiz){
+    if (!raiz)  return;
+    
     printf("%d ", raiz->key);
     PreOrdem(raiz->E); 
     PreOrdem(raiz->D); 
-} //PRE-ORDEM
 
+} //PRE-ORDEM
 void Largura(folha *raiz, folha *atual, folha *aux){
     if (!atual)
     {
@@ -140,7 +136,6 @@ folha* MAX(folha *raiz){
     return raiz; 
 
 }   //MAXIMO
-
 folha* MIN(folha *raiz){
    
     while (raiz->E != NULL) { 
@@ -151,7 +146,8 @@ folha* MIN(folha *raiz){
     
 }   //MINIMO
 
-folha* sucessor(folha *raiz, folha *atual){
+
+folha* sucessor(folha *atual){
 
     // Caso atual->D exista, procurar o menor valor da subarvore D
     if (atual->D != NULL) return MIN(atual->D);
@@ -166,7 +162,7 @@ folha* sucessor(folha *raiz, folha *atual){
     return p;
 }    //SUCESSOR
 
-folha* predecessor(folha *raiz, folha *atual){
+folha* predecessor(folha *atual){
 
     // Caso atual->E exista, procurar o maior valor da subarvore E
     if (atual->E != NULL)   return MAX(atual->E);
@@ -181,3 +177,63 @@ folha* predecessor(folha *raiz, folha *atual){
     return p;
 
 }   // PREDECESSOR
+
+
+folha* remover (folha *raiz, int chave){
+
+    //Raiz NULL
+    if (raiz == NULL) return raiz;
+
+    //Buscar o no a ser removido
+    if (chave < raiz->key) raiz->E = remover(raiz->E, chave);
+    else if (chave > raiz->key) raiz->D = remover(raiz->D, chave);
+
+    // Achado o no
+    else
+    {
+        // no com 0 ou 1 filho
+        if (raiz->E == NULL)
+        {
+            folha *aux = raiz->D;
+            FREE(raiz);
+            return aux;
+        }
+        else if (raiz->D == NULL)
+        {
+            folha *aux = raiz->E;
+            FREE(raiz);
+            return aux;
+        }
+
+        // No com 2 filho : usar o sucessor para fazer a substituicao 
+        folha *aux = MIN(raiz->D);
+        raiz->key = aux->key;
+
+        
+        raiz->D = remover(raiz->D, aux->key);
+    }
+
+    return raiz;
+}
+
+
+int intervalo(folha *raiz, int x1, int x2, int i){
+    if (!raiz){
+        return i;
+    }
+
+    if (x1 < raiz->key) i = intervalo(raiz->E, x1, x2, i);
+
+    if (raiz->key >= x1 && raiz->key <= x2)
+    {
+        printf("%d ", raiz->key);  
+        i ++;
+    }
+
+    if (x2 > raiz->key) i = intervalo(raiz->D, x1, x2, i);
+    
+    return i;
+}
+
+
+

@@ -9,10 +9,14 @@
 #include <string.h>
 #include "declaracoes.h"
 
+//TODO:  Resolver BUG LARGURA
+
 int main()
 {
     raiz = NULL;
     aux = NULL;
+    aux2 = NULL;
+
     while (scanf(" %s", comando))
     {
         
@@ -80,7 +84,7 @@ int main()
             {
                 printf("vazia\n");
             }else{
-                Largura(raiz, atual, aux); // Largura
+                Largura(raiz); // Largura
                 printf("\n");
             }
         }   // LARGURA

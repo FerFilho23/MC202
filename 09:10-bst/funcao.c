@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "declaracoes.h"
+#define MAX_SIZE 500
 
 void FREE(folha *raiz){
     if (!raiz) return;
@@ -10,7 +11,7 @@ void FREE(folha *raiz){
 
     free(raiz);
 
-}
+}   //FREE
 
 
 void inserir(folha **raiz, int chave){
@@ -94,36 +95,55 @@ void PreOrdem(folha *raiz){
     PreOrdem(raiz->D); 
 
 } //PRE-ORDEM
-void Largura(folha *raiz, folha *atual, folha *aux){
-    if (!atual)
+
+void Largura(folha *raiz){
+    int tail, head;
+
+    folha **lista = CriarLista(&head, &tail);   //Array de nos
+    folha *aux = raiz;
+    
+    while (aux)
     {
-        aux = raiz;
-        aux->next = NULL;
-        atual = aux;
+        
+        printf("%d ", aux->key);
+        
+        if (aux->E) ENQUEUE(lista, &tail, aux->E);   
+
+        if (aux->D) ENQUEUE(lista, &tail, aux->D);
+        
+        
+        aux = DEQUEUE(lista, &head);
     }
 
-    while (atual){                  //DEQUEUE
-        
-        folha* p = atual;
-        printf("%d ", p->key);
-        
-        if(p->E) {
+    //FREE LISTA
 
-            aux->next = p->E; //ENQUEUE
-            aux = aux->next;            
-        }
-
-        if(p->D)  {
-
-            aux->next = p->D; //ENQUEUE
-            aux = aux->next;
-        }
-       atual = atual->next;
-    }
+    free(lista);
+    return;
 
 } //LARGURA
 
+folha **CriarLista(int *head, int *tail){
 
+    folha **lista = malloc(MAX_SIZE*sizeof(folha*));
+
+    *head = *tail = 0;
+
+    return lista;
+}
+
+void ENQUEUE(folha **lista, int *tail, folha *aux)
+{
+
+   lista[*tail] = aux;
+   (*tail)++;
+}       //ENQUEUE
+
+
+folha *DEQUEUE(folha **lista, int *head){
+   
+    (*head)++;
+    return lista[*head - 1];
+}     //DEQUEUE
 
 ////// lab 10;
 

@@ -9,39 +9,32 @@
 #include <string.h>
 #include <math.h>
 #include "declaracoes.h"
-#define DEBUG
 
 /*TODO:
-    - Escolher entre encadeamento dentro da cadeia e sondagem 
-    -   implementar a funcao inserir 
-    -    "      "        "   buscar
-    -   "       "        "   remover 
-    - DAR O FREE!!
+    - considerar colisões 
+    - acertar a questao dos IDs
 */
+
 int main()
 {
-    
 
     while (scanf(" %s", comando))
     {
-
-        if (strcmp(comando, "f") == 0)
-        {
-            // FREE(/**/);
-            return 1;
-        }// FREE
-       
 
         if (strcmp(comando, "i") == 0){ 
 
             scanf(" %s", cadeia);
            
-
-            h1(djb2(cadeia));
-
-            // inserir(&raiz, chave);
+            int aux = djb2(cadeia);
+            key_num = h1(aux);
+        
+            inserir(key_num, tabela, cadeia, id, identificadores);
+           
+            id++;
 
         }// Inserir
+
+
 
         if (strcmp(comando, "b") == 0)
         {
@@ -49,24 +42,28 @@ int main()
             scanf(" %s", cadeia);
            
 
-            // if (busca(raiz, chave))
-            // {
-            //     printf("%d pertence\n", chave);
-
-            // }else
-            // {
-            //     printf("%d nao pertence\n", chave);
-            // }
+            if (busca(cadeia, tabela, identificadores) != -1)
+            {
+                printf("%s encontrada, id %d\n", cadeia, busca(cadeia, tabela, identificadores));
+            }else
+            {
+                printf("%s nao encontrada\n", cadeia);
+            }
              
         }// Buscar
 
         if (strcmp(comando, "r") == 0)
         {
             scanf(" %s", cadeia);
-          
 
-            
+            remover(tabela, cadeia, id, identificadores);
+            id = id -1;
+
         } //REMOVER
 
+        if (strcmp(comando, "f") == 0)
+        {
+            return 1;
+        } //TERMINAR
     }    
 }

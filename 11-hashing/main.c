@@ -9,10 +9,10 @@
 #include <string.h>
 #include <math.h>
 #include "declaracoes.h"
+// #define DEBUG
 
 /*TODO:
-    - considerar colisões 
-    - acertar a questao dos IDs
+    - considerar colisões - inicializar a tabela como "0" para as posições
 */
 
 int main()
@@ -28,10 +28,13 @@ int main()
             int aux = djb2(cadeia);
             key_num = h1(aux);
         
-            inserir(key_num, tabela, cadeia, id, identificadores);
-           
-            id++;
-
+            if (inserir(key_num, tabela, cadeia, id, identificadores)){
+                id++;
+            }
+    
+            #ifdef DEBUG
+                printf("id novo: %d\n", id);
+            #endif
         }// Inserir
 
 
@@ -56,7 +59,7 @@ int main()
         {
             scanf(" %s", cadeia);
 
-            remover(tabela, cadeia, id, identificadores);
+            remover(tabela, cadeia, identificadores);
             id = id -1;
 
         } //REMOVER

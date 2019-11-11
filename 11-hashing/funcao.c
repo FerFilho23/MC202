@@ -21,7 +21,7 @@ long djb2( char *str){
     return hash % MAX_CADEIAS;
 }   //Transformar string em num
 
-int h1(int k){
+int H1(int k){
 
     int h = k % m; //   h(k) = k mod m
     #ifdef DEBUG
@@ -32,7 +32,7 @@ int h1(int k){
     return h;
 } // Funcao hashing 1
 
-int h2(int k){
+int H2(int k){
     int h2 = 1 + (k %(m - 2));
     
     
@@ -57,15 +57,13 @@ int busca(char cadeia[], char tabela[tabela_size][MAX_CHAR], int identificadores
     return -1;
 }   //BUSCAR 
 
-
-
-int inserir(long key_num, char tabela[tabela_size][MAX_CHAR], char cadeia[], int id, int identificadores[])
+int inserir(int h1, int h2, char tabela[tabela_size][MAX_CHAR], char cadeia[], int id, int identificadores[])
 {
     #ifdef DEBUG
         printf("ENTROU EM INSERIR\n");
     #endif
 
-    if (strcmp(tabela[key_num], cadeia) == 0)   //A mesma chave so pode ser inserida uma vez
+    if (busca(cadeia, tabela, identificadores) != -1)   //A mesma chave so pode ser inserida uma vez
     { 
         #ifdef  DEBUG
             printf("cadeia ja inserida\n");
@@ -73,18 +71,30 @@ int inserir(long key_num, char tabela[tabela_size][MAX_CHAR], char cadeia[], int
        
         return 0;
     }
-    // else if ()       CASO DE COLISOES!!!
-    // {
-    //     // int h = (h1 + i*h2) % m;
-    // }
+    else if (strcmp(tabela[h1], "0") != 0) // CASO DE COLISOES!!!
+    {
+        int i = 1;
+        while (1)
+        {            
+            int h = (h1 + i*h2) % m;    //HASHING DUPLO
+            
+            if (strcmp(tabela[h], "0") == 0)    //Encontrar uma posicao vazia
+            {
+                strcpy(tabela[h], cadeia);
+                identificadores[h] = id;
+               
+                return 1;
+            }
+            i++;    //Aumentar o incremento 
+        }
+    }
     
-    strcpy(tabela[key_num], cadeia);
+    strcpy(tabela[h1], cadeia);
 
-    identificadores[key_num] = id;
-    
+    identificadores[h1] = id;
 
     #ifdef DEBUG
-        printf("cadeia inserida na posicao %ld: %s, com ID = %d\n", key_num, tabela[key_num], identificadores[key_num]);
+        printf("cadeia inserida na posicao %d: %s, com ID = %d\n", h1, tabela[h1], identificadores[h1]);
     #endif
 
     return 1;

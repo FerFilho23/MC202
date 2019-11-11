@@ -11,24 +11,26 @@
 #include "declaracoes.h"
 // #define DEBUG
 
-/*TODO:
-    - considerar colisões - inicializar a tabela como "0" para as posições
-*/
 
 int main()
 {
+    for (int i = 0; i < tabela_size; i++){
+        identificadores[i] = -1; // ID vazio = -1
+        strcpy(tabela[i], "0");  // CHAVE vazio= "0"
+    } //Inicializar tabela hash e identificadores como vazios
 
     while (scanf(" %s", comando))
     {
-
+        
         if (strcmp(comando, "i") == 0){ 
 
             scanf(" %s", cadeia);
            
-            int aux = djb2(cadeia);
-            key_num = h1(aux);
+            int k = djb2(cadeia);
+            h1 = H1(k);
+            h2 = H2(k);
         
-            if (inserir(key_num, tabela, cadeia, id, identificadores)){
+            if (inserir(h1, h2, tabela, cadeia, id, identificadores)){
                 id++;
             }
     
@@ -37,10 +39,7 @@ int main()
             #endif
         }// Inserir
 
-
-
-        if (strcmp(comando, "b") == 0)
-        {
+        if (strcmp(comando, "b") == 0){
 
             scanf(" %s", cadeia);
            
@@ -55,18 +54,25 @@ int main()
              
         }// Buscar
 
-        if (strcmp(comando, "r") == 0)
-        {
+        if (strcmp(comando, "r") == 0){
             scanf(" %s", cadeia);
 
             remover(tabela, cadeia, identificadores);
-            id = id -1;
 
         } //REMOVER
 
-        if (strcmp(comando, "f") == 0)
-        {
+        if (strcmp(comando, "f") == 0){
             return 1;
         } //TERMINAR
+
+
+
+
+
+
+        // for(int i = 0; i < tabela_size; i++){
+        //     printf("%s ", tabela[i]);
+        // }
+        // printf("\n");
     }    
 }

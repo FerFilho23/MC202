@@ -3,38 +3,37 @@
 #include "declaracoes.h"
 #define LEFT(i) (2*i)
 #define RIGHT(i) (LEFT(i)+1)
+#define DEBUG
 
-void FREE(heap *H){
-   free(H->array);
-   free(H);
-   return;
-}   //FREE
 
-void construir_heap(heap **H, int size)
+heap* construir_heap(heap *H, int size)
 {
+
     scanf(" %d", &size); //Ler o tamanho do array
 
     H = malloc(sizeof(heap *));
+    if(!H) return H;
+
     H->array = malloc(sizeof(int) * (1 + size));
-    H->heap_size = 0;
+    if(!H->array) return H;
+
+    H->heap_size = size;
     H->array_size = size;
 
     for (int i = 1; i <= H->array_size; i++)    //Inserir os elementos no array
     {
         scanf("%d", &H->array[i]);
-        H->heap_size++;
     }
-    for (int i = size/2; i > 0; i--)
-    {
-        MAXheapify(H, i);
-    }
-    
-    
 
-    return;
+    for (int i = size/2; i > 0; i--)    //Transformar o array em um heap
+    {
+       H = MAXheapify(H, i);
+    }
+    
+    return  H;
 }
 
-void MAXheapify(heap **H, int pai){
+heap* MAXheapify(heap *H, int pai){
 
     int L, R;
     int largest = pai;
@@ -51,25 +50,31 @@ void MAXheapify(heap **H, int pai){
     }
     if (largest != pai)   //Se o maior nao for o pai
     {
-        troca(H, pai, largest);
-        MAXheapify(H, largest);
+        H = troca(H, pai, largest);
+        H = MAXheapify(H, largest);
     }
 
-    return;
+    return H;
 }
 
-void print_array(heap *H){
-    for (int i = 1; i < H->array_size; i++)
-    {
-        printf("%d ", H->array[i]);
-    }
-    printf("\n");
-}
-
-void troca(heap *H, int i, int j){
+heap* troca(heap *H, int i, int j){
     int aux;
-    aux = H->array[i];
+    aux = H->array[j];
     H->array[j] = H->array[i];
     H->array[i] = aux;
-    return;
+    return H;
+}
+
+void FREE(heap *H){
+   free(H->array);
+   free(H);
+   return;
+}   //FREE
+
+void print_array(heap *H){
+    for (int i = 1; i <= H->array_size; i++)
+    {
+        printf("%d ", H->array[i]); //PRINT ARRAY
+    }
+    printf("\n");
 }

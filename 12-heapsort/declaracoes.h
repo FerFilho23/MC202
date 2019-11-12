@@ -7,7 +7,7 @@ typedef struct heap{
 } heap;
 
 void FREE(heap *H);                 //FREE
-void construir_heap(heap **H, int size);
-void MAXheapify(heap *H, int i);
+heap* construir_heap(heap *H, int size);
+heap* MAXheapify(heap *H, int i);
 void print_array(heap *H);
-void troca(heap *H, int i, int j);
+heap* troca(heap *H, int i, int j);

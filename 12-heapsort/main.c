@@ -9,16 +9,13 @@
 #include <string.h>
 #include "declaracoes.h"
 
-/*TODO:
-    -   implementar o heapsort
-*/
 int main()  //HEAPSORT
 {
-    heap *H;
+    heap *H = NULL;
 
     H = construir_heap(H, size);
-
-
+    
+    H = removeMAX(H);
 
     print_array(H);
     FREE(H);

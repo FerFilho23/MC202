@@ -6,9 +6,8 @@
 #define DEBUG
 
 
-heap* construir_heap(heap *H, int size)
+heap* construir_heap(heap *H, int size) //ALOCAR A MEMORIA E CONSTRUIR O ARRAY PARA SER O HEAP
 {
-
     scanf(" %d", &size); //Ler o tamanho do array
 
     H = malloc(sizeof(heap *));
@@ -33,8 +32,8 @@ heap* construir_heap(heap *H, int size)
     return  H;
 }
 
-heap* MAXheapify(heap *H, int pai){
-
+heap* MAXheapify(heap *H, int pai)      //APLICAR AS PROPRIEDADES DO HEAP
+{
     int L, R;
     int largest = pai;
     L = LEFT(pai);
@@ -57,7 +56,22 @@ heap* MAXheapify(heap *H, int pai){
     return H;
 }
 
-heap* troca(heap *H, int i, int j){
+heap *removeMAX(heap *H)                //COLOCAR O MAX NO FINAL DO ARRAY E REMOVE-LO DE HEAP 
+{
+
+    for (int i = H->array_size; i >= 2; i--)
+    {
+        H = troca(H, 1, i);
+        H->heap_size = H->heap_size - 1;
+        H = MAXheapify(H, 1);
+    }
+
+    return H;
+}
+
+heap *troca(heap *H, int i, int j)      //TROCAR DOIS ELEMENTOS DO ARRAY 
+{
+   
     int aux;
     aux = H->array[j];
     H->array[j] = H->array[i];

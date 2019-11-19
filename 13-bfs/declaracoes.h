@@ -4,10 +4,9 @@ int num_vert, origem, aresta[2];
 
 typedef struct vertice
 {
-
     int visitado; //FALSE
     int d;
-    struct vertice* pi;
+    int pi;
 
 } vertice;
 

@@ -56,7 +56,7 @@ heap* MAXheapify(heap *H, int pai)      //APLICAR AS PROPRIEDADES DO HEAP
     return H;
 }
 
-heap *removeMAX(heap *H)                //COLOCAR O MAX NO FINAL DO ARRAY E REMOVE-LO DE HEAP 
+heap *removeMAX(heap *H)                //COLOCAR O MAX NO FINAL DO ARRAY E REMOVE-LO DO HEAP 
 {
 
     for (int i = H->array_size; i >= 2; i--)

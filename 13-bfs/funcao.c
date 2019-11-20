@@ -7,6 +7,7 @@
 #define E_size num_vert *(num_vert - 1)
 #define FALSE  0
 #define TRUE  1
+#define CAPACIDADE INT_MAX
 
 vertice* construir_vertices(int num_vert, vertice *V){
    #ifdef  DEBUG
@@ -72,6 +73,31 @@ int intervalo_vizinhos(int num_vert, vertice* V, int origem){
     return min-V[origem].number; //intervalo dos vizinhos de v no vet E
 }
 
+void ENQUEUE(int data){
+    if(size >= CAPACIDADE) return;  //Tamanho superou a capacidade da lista
+
+    fim = (fim+1)%CAPACIDADE; 
+    size++;
+
+    QUEUE[fim] = data;
+    return;
+}
+
+int DEQUEUE(){
+    if(!size) return -1;   //Lista vazia
+
+    int data = QUEUE[inicio];
+
+    inicio = (inicio+1)%CAPACIDADE;
+    size -= 1;
+
+    return data;
+}
+
 void BFS(int num_vert, vertice *V, vertice *E, int origem){
-    
+
+
+
+
+
 }

@@ -15,12 +15,14 @@
 /*TODO:
 
     . BFS
-        -   EQUEUE   
-        -   DEQUEUE
         -   corpo da funcao
         -   print-path
     .
 */
+int QUEUE[CAPACIDADE];
+int size = 0;
+int fim = CAPACIDADE-1;
+int inicio = 0;
 
 int main()
 {

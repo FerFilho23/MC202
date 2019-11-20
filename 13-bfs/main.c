@@ -10,6 +10,7 @@
 #include <limits.h>
 #include "declaracoes.h"
 #define DEBUG
+#define E_size num_vert*(num_vert-1)
 
 /*TODO:
 
@@ -27,7 +28,7 @@ int main()
         scanf(" %d", &num_vert); //Ler o numero de vert do grafo
         
         V = construir_vertices(num_vert, V);    //Vetor para os vertices do grafo
-        E = malloc(sizeof(vertice)*(num_vert*(num_vert-1))); //Vetor para os vizinhos de cada vertice. Tamanho no maximo num_vert*(num_vert-1)
+        E = malloc(sizeof(vertice)*E_size); //Vetor para os vizinhos de cada vertice. Tamanho no maximo num_vert*(num_vert-1)
         if(!E) return 1;
     
     //
@@ -44,7 +45,7 @@ int main()
                 printf("Aresta: %d %d\n", aresta[0], aresta[1]);
             #endif
 
-            inserir_vizinhos(aresta, &V, &E);
+            inserir_vizinhos(aresta, num_vert, &V, &E);
         }
     
         scanf(" %d", &origem);  //Ler a origem da busca

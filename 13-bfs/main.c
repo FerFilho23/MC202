@@ -21,6 +21,7 @@
         -   print-path
     .
 */
+
 int main()
 {
     //CONSTRUCAO DOS VET
@@ -28,24 +29,36 @@ int main()
         scanf(" %d", &num_vert); //Ler o numero de vert do grafo
         
         V = construir_vertices(num_vert, V);    //Vetor para os vertices do grafo
-        E = malloc(sizeof(vertice)*E_size); //Vetor para os vizinhos de cada vertice. Tamanho no maximo num_vert*(num_vert-1)
-        if(!E) return 1;
+        E = construir_vizinhos(num_vert, E);
+       
     
     //
    
     //BFS
+        int aux = 0;
+
         while (scanf("%d,%d", &aresta[0], &aresta[1]))  //Ler as arestas
         {
             if (aresta[0]==0 && aresta[1]==0)
             {
                 break;
             }
-            
-            #ifdef DEBUG
-                printf("Aresta: %d %d\n", aresta[0], aresta[1]);
-            #endif
 
-            inserir_vizinhos(aresta, num_vert, &V, &E);
+            for (int i = 0; i <= E_size; i++)
+            {
+                if (E[i].number == -1)
+                {
+                    E[i].number = aresta[1];
+                    if (V[aresta[0]].number == -1)
+                    {
+                        V[aresta[0]].number = i;
+                    }
+                    break;
+                }
+                
+            }
+            
+            
         }
     
         scanf(" %d", &origem);  //Ler a origem da busca
@@ -55,8 +68,21 @@ int main()
     //SAIDAS
 
         printf("Origem da busca: %d\n", origem);
+        
 
+        #ifdef  DEBUG
+            for (int i = 1; i <= num_vert; i++)
+            {
+                printf("%d ", V[i].number);
+            }
+            printf("\n");
 
+            for (int i = 0; i < E_size; i++)
+            {
+                printf("%d ", E[i].number);
+            }
+            printf("\n");
+        #endif
         free(V);
         free(E);
     //

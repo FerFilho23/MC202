@@ -15,9 +15,9 @@
 /*TODO:
 
     . BFS
-        -   corpo da funcao
         -   EQUEUE   
         -   DEQUEUE
+        -   corpo da funcao
         -   print-path
     .
 */
@@ -68,7 +68,7 @@ int main()
     //SAIDAS
 
         printf("Origem da busca: %d\n", origem);
-        
+        printf("Vertices alcancados e distancias:\n");
 
         #ifdef  DEBUG
             for (int i = 1; i <= num_vert; i++)
@@ -82,7 +82,19 @@ int main()
                 printf("%d ", E[i].number);
             }
             printf("\n");
+
+
+            printf("Vizinhos de %d: ", origem);
+            for (int i = V[origem].number; i < V[origem].number+intervalo_vizinhos(num_vert, V, origem); i++)   
+            {
+                printf("%d ", E[i].number);
+            }
+            printf("\n");
         #endif
+
+
+
+
         free(V);
         free(E);
     //

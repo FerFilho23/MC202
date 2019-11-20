@@ -5,6 +5,8 @@
 #include "declaracoes.h"
 // #define DEBUG
 #define E_size num_vert *(num_vert - 1)
+#define FALSE  0
+#define TRUE  1
 
 vertice* construir_vertices(int num_vert, vertice *V){
    #ifdef  DEBUG
@@ -19,7 +21,7 @@ vertice* construir_vertices(int num_vert, vertice *V){
         V[i].number = -1;
         V[i].dist = 0;
         V[i].pi = -1;
-        V[i].marked = 0;
+        V[i].marked = FALSE;    //FALSE
     }
     
     return V;
@@ -39,3 +41,37 @@ vertice* construir_vizinhos(int num_vert, vertice *E){
     return E;
 }
 
+int intervalo_vizinhos(int num_vert, vertice* V, int origem){    
+    //Encontrar o intervelo de indices dos vizinhos de v
+
+    int min = -1;
+
+    for (int i = 1; i <= num_vert; i++) //Percorrer o vetor V e encontrar o menor valor maior que V[v].number
+    {
+        if (V[i].number > V[origem].number)
+        {
+            if (min == -1) // Primeiro numero 
+            {
+                min = V[i].number;
+                continue;
+            }
+            else if(V[i].number<min)
+            {
+                min = V[i].number;
+                continue;
+            }
+        }
+    }
+
+    if (min == -1)
+    {
+       return 1;
+    }
+    
+
+    return min-V[origem].number; //intervalo dos vizinhos de v no vet E
+}
+
+void BFS(int num_vert, vertice *V, vertice *E, int origem){
+    
+}

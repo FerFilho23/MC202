@@ -13,14 +13,12 @@
 #define E_size num_vert*(num_vert-1)
 
 /*TODO:
+    
+    .   Transformar em NAO-ORIENTADO!! 
 
-    . BFS
-        -   corpo da funcao
-        -   print-path
-    .
 */
 int QUEUE[CAPACIDADE];
-int size = 0;
+int Qsize = 0;
 int fim = CAPACIDADE-1;
 int inicio = 0;
 
@@ -28,10 +26,10 @@ int main()
 {
     //CONSTRUCAO DOS VET
 
-        scanf(" %d", &num_vert); //Ler o numero de vert do grafo
+        scanf(" %d", &num_vert); //Ler o numero de verts do grafo
         
         V = construir_vertices(num_vert, V);    //Vetor para os vertices do grafo
-        E = construir_vizinhos(num_vert, E);
+        E = construir_vizinhos(num_vert, E);    //Vetor para as arestas do grafo
        
     
     //
@@ -85,17 +83,28 @@ int main()
             }
             printf("\n");
 
-
-            printf("Vizinhos de %d: ", origem);
-            for (int i = V[origem].number; i < V[origem].number+intervalo_vizinhos(num_vert, V, origem); i++)   
+            for (int j = 1; j <= num_vert ; j++)
             {
-                printf("%d ", E[i].number);
+            
+                printf("Vizinhos de %d: ", j);
+
+                if (V[j].number == -1)
+                {
+                    printf("\n");
+                    continue;
+                }
+                
+
+                for (int i = V[j].number; i < V[j].number+intervalo_vizinhos(num_vert, V, j); i++)   
+                {
+                    printf("%d ", E[i].number);
+                }
+                printf("\n");
             }
-            printf("\n");
         #endif
-
-
-
+        
+        printf("%d %d\n", origem, V[origem].dist);
+        BFS(num_vert, V, E, origem);
 
         free(V);
         free(E);

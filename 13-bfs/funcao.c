@@ -21,7 +21,6 @@ vertice* construir_vertices(int num_vert, vertice *V){
     {
         V[i].number = -1;
         V[i].dist = 0;
-        V[i].pi = -1;
         V[i].marked = FALSE;    //FALSE
     }
     
@@ -74,30 +73,53 @@ int intervalo_vizinhos(int num_vert, vertice* V, int origem){
 }
 
 void ENQUEUE(int data){
-    if(size >= CAPACIDADE) return;  //Tamanho superou a capacidade da lista
 
     fim = (fim+1)%CAPACIDADE; 
-    size++;
+    Qsize++;
 
     QUEUE[fim] = data;
     return;
 }
 
 int DEQUEUE(){
-    if(!size) return -1;   //Lista vazia
+    if(!Qsize) return -1;   //Lista vazia
 
     int data = QUEUE[inicio];
 
     inicio = (inicio+1)%CAPACIDADE;
-    size -= 1;
+    Qsize -= 1;
 
     return data;
 }
 
 void BFS(int num_vert, vertice *V, vertice *E, int origem){
+    int u; 
 
+    V[origem].dist = 0;
+    V[origem].marked = TRUE;
 
+    ENQUEUE(origem);
 
+    while (Qsize)
+    {
+        u = DEQUEUE();
+        if (V[u].number != -1) // Se u tiver vizinho - procurar eles
+        {
+            for (int i = V[u].number; i < V[u].number + intervalo_vizinhos(num_vert, V, u); i++) //Procurar os vizinhos de u
+            {
+                if (!V[E[i].number].marked)
+                {
+                    V[E[i].number].dist = V[u].dist+1;
+                    printf("%d %d\n", E[i].number, V[E[i].number].dist);
+                    ENQUEUE(E[i].number);
+                    V[E[i].number].marked = TRUE;
+                }
+                
+            }
+        }
+    }
 
-
+    return;
 }
+
+

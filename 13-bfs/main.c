@@ -9,14 +9,10 @@
 #include <string.h>
 #include <limits.h>
 #include "declaracoes.h"
-#define DEBUG
+// #define DEBUG
+// #define DEBUG2
 #define E_size num_vert*(num_vert-1)
 
-/*TODO:
-    
-    .   Transformar em NAO-ORIENTADO!! 
-
-*/
 int QUEUE[CAPACIDADE];
 int Qsize = 0;
 int fim = CAPACIDADE-1;
@@ -35,37 +31,65 @@ int main()
     //
    
     //BFS
-        int aux = 0;
-
         while (scanf("%d,%d", &aresta[0], &aresta[1]))  //Ler as arestas
-        {
+        {   
+
             if (aresta[0]==0 && aresta[1]==0)
             {
                 break;
             }
 
-            for (int i = 0; i <= E_size; i++)
-            {
-                if (E[i].number == -1)
-                {
-                    E[i].number = aresta[1];
-                    if (V[aresta[0]].number == -1)
-                    {
-                        V[aresta[0]].number = i;
-                    }
-                    break;
-                }
-                
-            }
-            
-            
+            ENQUEUE(aresta[0]); //Emprestar a QUEUE para inserir as arestas no grafo de forma a deixa-lo nao-ordenado
+            ENQUEUE(aresta[1]);
         }
     
         scanf(" %d", &origem);  //Ler a origem da busca
 
-    ///
+       ///Inserir arestas em E e suas pos em V - nao-ordenado
 
-    //SAIDAS
+        for (int i = 1; i <= num_vert; i++) //Percorrer V[i] - vertices
+        {
+            if (!Qsize) //Nao ha arestas
+            {
+               break;
+            }
+            
+            
+
+            // for (int j = 0; j < Qsize; i++) //Percorrer QUEUE[j] - fila para colocar em E
+            // {   
+            //     if (QUEUE[j] == i)
+            //     {
+            //         for (int k = 0; k < E_size; k++)  //Percorrer E[k]
+            //         {
+            //             if (E[k].number == -1)
+            //             {                        
+            //                 if (j % 2 == 1)
+            //                 {
+            //                     E[k].number = QUEUE[j-1];                        
+            //                 } else
+            //                 {
+            //                     E[k].number = QUEUE[j+1];
+            //                 }
+            //                 V[i].number = k;
+            //                 break;
+            //             }
+
+            //         } 
+            //     }
+                
+            // }
+        }
+       ///
+
+        #ifdef DEBUG2
+            printf("QUEUE: ");
+            for (int i = 0; i < Qsize; i++)
+            {
+                printf("%d ", QUEUE[i]);
+            }
+            printf("\nQsize: %d\n", Qsize);
+        #endif
 
         printf("Origem da busca: %d\n", origem);
         printf("Vertices alcancados e distancias:\n");
@@ -104,6 +128,13 @@ int main()
         #endif
         
         printf("%d %d\n", origem, V[origem].dist);
+        
+        int aux = DEQUEUE();    //Liberar a QUEUE p/ usar no BFS
+        while (aux)
+        {
+           aux = DEQUEUE();
+        }
+        
         BFS(num_vert, V, E, origem);
 
         free(V);

@@ -9,11 +9,6 @@ typedef struct folha {
     struct folha *pai;
 } folha;
 
-// typedef struct queue
-// {
-//     struct folha *next;
-// }   queue;
-
 
 folha* raiz, *aux, *aux2; 
 

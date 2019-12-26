@@ -64,7 +64,7 @@ void inserir(folha **raiz, int chave){
 
 
 folha* busca(folha *raiz, int chave){
-    if (raiz == NULL ||raiz->key == chave)  return raiz;
+    if (raiz == NULL || raiz->key == chave)  return raiz;
     
     if (chave > raiz->key) return busca(raiz->D, chave); //Recursão
     else return busca(raiz->E, chave);
@@ -172,7 +172,7 @@ folha* sucessor(folha *atual){
     // Caso atual->D exista, procurar o menor valor da subarvore D
     if (atual->D != NULL) return MIN(atual->D);
 
-    // Se nao ha subarvore D, procurar o pai cujo filho = pai->D
+    // Se nao ha subarvore D, procurar o pai cujo filho = pai->E
     folha *p = atual->pai;
     while (p != NULL && atual == p->D)
     {
@@ -187,7 +187,7 @@ folha* predecessor(folha *atual){
     // Caso atual->E exista, procurar o maior valor da subarvore E
     if (atual->E != NULL)   return MAX(atual->E);
 
-    // Se nao ha subarvore E, procurar o pai cujo filho = pai->E
+    // Se nao ha subarvore E, procurar o pai cujo filho = pai->
     folha *p = atual->pai;
     while (p != NULL && atual == p->E)
     {
